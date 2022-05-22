@@ -7,6 +7,8 @@
   | SCK (D13)  | CLK (D13)        |
   | I/O (D7)   | LOAD/CS (D12)    |
   
+  by: Robert Dokša
+  
  */
 #include <SPI.h>
 #define LOAD_PIN 7
