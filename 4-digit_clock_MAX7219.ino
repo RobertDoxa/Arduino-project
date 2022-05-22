@@ -13,7 +13,7 @@
 #include <SPI.h>
 #define LOAD_PIN 7
 
-void maxTransfer(uint8_t address, uint8_t value) 
+void dataTransfer(uint8_t address, uint8_t value) 
 {
   digitalWrite(LOAD_PIN, LOW);      // LOAD -> LOW
   SPI.transfer(address);            // Posalji registru adresu
@@ -28,33 +28,33 @@ void setup()
   SPI.begin();                   // Pokreni SPI
   Serial.begin(9600);            // Pokreni serial comms
 
-  maxTransfer(0x0F, 0x00);
-  maxTransfer(0x09, 0xFF);  // Mode B
-  maxTransfer(0x0A, 0x00);  // Intenzitet -> 1/32 ciklusa rada
-  maxTransfer(0x0B, 0x03);  // Omogući 4 znamenke
-  maxTransfer(0x0C, 0x01);  // Uključi chip
+  dataTransfer(0x0F, 0x00);
+  dataTransfer(0x09, 0xFF);  // Mode B
+  dataTransfer(0x0A, 0x00);  // Intenzitet -> 1/32 ciklusa rada
+  dataTransfer(0x0B, 0x03);  // Omogući 4 znamenke
+  dataTransfer(0x0C, 0x01);  // Uključi chip
 }
 
 void loop()
 {
-  maxTransfer(0x04, 0x00);                // Tisucica = 0 by default
+  dataTransfer(0x04, 0x00);                // Tisucica = 0 by default
   for(int L=0x01; L<=0x06; L++)
   {
-    maxTransfer(0x03, 0x00);              // Stotica = 0 by default
+    dataTransfer(0x03, 0x00);              // Stotica = 0 by default
     for(int k=0x01; k<=0x0A; k++)
     {
-      maxTransfer(0x02, 0x00);            // Desetica = 0 by default
+      dataTransfer(0x02, 0x00);            // Desetica = 0 by default
       for(int j=0x01; j<=0x06; j++)
       {
         for (int i=0x00; i<=0x09; i++)
         {
-          maxTransfer(0x01, i);           // Seconds count (0-9)
+          dataTransfer(0x01, i);           // Seconds count (0-9)
           delay(1000);
         }
-        maxTransfer(0x02, j);             // Desetica count (0-5)
+        dataTransfer(0x02, j);             // Desetica count (0-5)
       }
-      maxTransfer(0x03, k);               // Stotica count (0-9)
+      dataTransfer(0x03, k);               // Stotica count (0-9)
     }
-    maxTransfer(0x04, L);                 // Tisucica count (0-5)
+    dataTransfer(0x04, L);                 // Tisucica count (0-5)
   }
 }
