@@ -97,7 +97,7 @@ double dist()
   digitalWrite(TRG, LOW);
   duration = pulseIn(ECH, HIGH);
   distance = duration * 0.034 / 2;
-  if(distance>50) return 50;
+  if (distance>50) return 50;
   else return distance;
 }
 
